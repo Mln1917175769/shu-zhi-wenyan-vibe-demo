@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数智文言｜古诗文学习助手Demo</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",serif;}
+        body{background:#f8f5ee;color:#2c2c2c;padding:20px;max-width:900px;margin:0 auto;}
+        header{text-align:center;margin-bottom:30px;padding-bottom:15px;border-bottom:1px solid #c9bcac;}
+        h1{color:#6b4226;font-size:28px;}
+        .subtitle{color:#888;margin-top:6px;}
+        .container{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+        .card{background:#fff7e8;border-radius:12px;padding:20px;box-shadow:0 2px 8px #00000015;}
+        textarea{width:100%;min-height:140px;padding:12px;border:1px solid #d4c5b0;border-radius:8px;font-size:15px;resize:none;}
+        button{margin-top:12px;padding:10px 22px;background:#8c5c38;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;}
+        button:hover{background:#70492c;}
+        .result-box{min-height:220px;background:#fff;padding:14px;border:1px solid #e2d4bf;border-radius:8px;white-space:pre-wrap;line-height:1.7;}
+        .feature-list{margin-top:16px;line-height:1.8;color:#555;}
+        @media(max-width:640px){.container{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+<header>
+    <h1>数智文言</h1>
+    <div class="subtitle">Vibe‑Coding简易原型｜高中古诗文启发式学习助手</div>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h3>📜输入古诗文原文</h3>
+        <textarea id="inputText" placeholder="粘贴文言文，例如：
+子曰：学而时习之，不亦说乎？有朋自远方来，不亦乐乎？">子曰：学而时习之，不亦说乎？有朋自远方来，不亦乐乎？</textarea>
+        <button onclick="simulateAI()">启发式解析</button>
+        <div class="feature-list">
+✅模拟功能：
+• 原文翻译
+• 重点字词注释
+• 启发式提问引导（不直接灌输答案）
+• 考点提示
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📖AI解析输出（模拟RAG效果）</h3>
+        <div class="result-box" id="output">点击上方按钮生成解析……</div>
+    </div>
+</div>
+
+<script>
+const mockDB = {
+"子曰：学而时习之，不亦说乎？有朋自远方来，不亦乐乎？":`【原文】子曰：学而时习之，不亦说乎？有朋自远方来，不亦乐乎？
+
+【白话译文】
+孔子说：学习知识并且按时温习实践它，不也是很愉悦吗？有志同道合的朋友从远方过来相聚，不也是很快乐吗？
+
+【重点字词注释】
+说：通“悦”，愉快。
+习：温习、实践练习。
+
+👉启发式思考提问（数智文言特色，不直接给结论）：
+1.“习”仅仅代表复习书本吗，你觉得还可以代表什么行为？
+2.为什么“有朋自远方来”会让人感到快乐？
+
+📌高考考点提示：
+通假字「说」；理解儒家的学习观与交友观。`
+};
+
+function simulateAI(){
+    const userText = document.getElementById("inputText").value.trim();
+    const outDom = document.getElementById("output");
+    outDom.innerText = "AI正在检索知识库，生成启发式回答……";
+
+    setTimeout(()=>{
+        if(mockDB[userText]){
+            outDom.innerText = mockDB[userText];
+        }else{
+            outDom.innerText = `【模拟解析】\n收到你的古文文本：\n${userText}\n\n> 本Demo为Vibe‑Coding前端原型，真实项目会接入RAG知识库完成检索，给出译文、注释、启发提问、考点分析。\n> 这里仅做界面交互演示。`;
+        }
+    },1200);
+}
+</script>
+</body>
+</html>
